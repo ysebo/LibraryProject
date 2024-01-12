@@ -19,4 +19,9 @@ public class Book {
     private Integer created_date;
     @Enumerated(EnumType.STRING)
     private Type type;
+    @ManyToOne
+    User owner ;
+    @ManyToOne
+    Author writer;
+
 }

@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
+
 //@AllArgsConstructor
 //@NoArgsConstructor
 @Getter
@@ -18,5 +21,7 @@ public class User {
     private long id;
     private String username;
     private String password;
-
+    @OneToMany(cascade = CascadeType.ALL)
+    List<Book> userBooks;
+    
 }
