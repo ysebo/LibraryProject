@@ -1,5 +1,5 @@
 package com.example.project.dto.book;
-import com.example.project.enums.Type;
+import com.example.project.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,8 +9,10 @@ import lombok.Setter;
 public class BookRequest {
     private String description;
     private Integer price;
+    private String transcript;
+    private Integer age_access;
     private String name;
-    private String author;
+    private String author_name;
     private Integer created_date;
-    private Type type;
+    private Role role;
 }

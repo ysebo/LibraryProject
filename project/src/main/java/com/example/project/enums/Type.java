@@ -1,5 +1,5 @@
 package com.example.project.enums;
 
 public enum Type {
-    Detective , Romance , Novella ,Autobiography , Drama , Horror , Kyrgyz , Chinese
+    Detective , Romance , Novella ,Autobiography , Drama , Horror , Fiction , Chinese
 }

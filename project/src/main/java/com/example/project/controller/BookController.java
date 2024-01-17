@@ -36,9 +36,9 @@ public class BookController {
     public void update(@RequestBody BookRequest bookRequest, @PathVariable Long id ){
         bookService.updateById(id, bookRequest);
     }
-    @PostMapping("/add/{userId}")
-    public void add(@RequestBody BookRequest bookRequest,  @PathVariable Long userId){
-        bookService.add(bookRequest, userId);
+    @PostMapping("/add")
+    public void add(@RequestBody BookRequest request, @RequestHeader("Authorization") String token){
+        bookService.add(request, token );
     }
     @GetMapping("/getAll")
     public List<BookResponse> bookResponses(){
@@ -51,7 +51,7 @@ public class BookController {
     @GetMapping("/{userId}")
     public List<BookResponse>userBooks(@PathVariable Long userId){
         Optional<User> user = userRepository.findById(userId);
-        return bookMapper.toDtoS(user.get().getUserBooks());
+        return bookMapper.toDtoS(user.get().getCustomer().getBooks());
     }
 
 }

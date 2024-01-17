@@ -11,9 +11,7 @@ public class UserMapperImpl implements UserMapper {
     public UserResponse toDto(User object) {
         UserResponse userResponse = new UserResponse();
 
-
-        userResponse.setPassword(object.getPassword());
-        userResponse.setUsername(object.getUsername());
+        userResponse.setEmail(object.getEmail());
         return userResponse;
     }
     @Override

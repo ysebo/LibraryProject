@@ -10,5 +10,5 @@ public interface BookService {
     void updateById(Long id , BookRequest productRequest);
     List<BookResponse> getAll();
 
-    void add(BookRequest productRequest, Long userId);
+    void add(BookRequest productRequest, String token);
 }

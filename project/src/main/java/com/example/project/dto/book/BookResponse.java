@@ -1,5 +1,5 @@
 package com.example.project.dto.book;
-import com.example.project.enums.Type;
+import com.example.project.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,5 +13,5 @@ public class BookResponse {
     private String name;
     private String author;
     private Integer created_date;
-    private Type type;
+    private Role role;
 }

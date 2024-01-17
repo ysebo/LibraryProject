@@ -16,14 +16,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    @Override
-    public String findAll(String name) {
-        User user = new User();
-        user.setUsername(name);
-
-        userRepository.save(user);
-        return name+" registered!";
-    }
 
     @Override
     public UserResponse getById(Long id) {
@@ -33,8 +25,7 @@ public class UserServiceImpl implements UserService {
         }
         else {
             UserResponse userResponse = new UserResponse();
-            userResponse.setUsername(user.get().getUsername());
-            userResponse.setPassword(user.get().getPassword());
+            userResponse.setEmail(user.get().getEmail());
             return userResponse;
 
         }
@@ -63,7 +54,7 @@ public class UserServiceImpl implements UserService {
             else {
 
                 user.get().setPassword(userRequest.getPassword());
-                user.get().setUsername(userRequest.getUsername());
+                user.get().setEmail(userRequest.getEmail());
                 userRepository.save(user.get());
 
             }
@@ -72,10 +63,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(UserRequest userRequest) {
-        if (userRequest.getUsername().isEmpty())
+        if (userRequest.getEmail().isEmpty())
             throw new NotFoundException("Username can't be empty" , HttpStatus.BAD_GATEWAY);
         User user = new User();
-        user.setUsername(userRequest.getUsername());
+        user.setEmail(userRequest.getEmail());
         user.setPassword(userRequest.getPassword());
 
 

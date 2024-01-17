@@ -1,14 +1,13 @@
-package com.example.project.dto.user;
+package com.example.project.dto.auth;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-
-public class UserResponse {
+public class AuthLoginResponse {
     private Long id;
     private String email;
     private String name;
-    
+    private String token;
 }

@@ -1,5 +1,6 @@
 package com.example.project.dto.user;
 
+import com.example.project.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,7 +8,9 @@ import lombok.Setter;
 @Setter
 
 public class UserRequest {
-
-    private String username;
+    private String email;
+    private String name;
     private String password;
+    private Integer age;
+    private Role role;
 }

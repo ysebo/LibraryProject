@@ -14,7 +14,7 @@ public class BookMapperImpl implements BookMapper {
     @Override
     public BookResponse toDto(Book object) {
         BookResponse bookResponse = new BookResponse();
-        bookResponse.setType(object.getType());
+
         bookResponse.setName(object.getName());
         bookResponse.setDescription(object.getDescription());
         bookResponse.setPrice(object.getPrice());
