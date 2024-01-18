@@ -10,8 +10,9 @@ public class BookResponse {
     private Long id ;
     private String description;
     private Integer price;
+    private String genre;
     private String name;
-    private String author;
+    private String author_name;
     private Integer created_date;
-    private Role role;
+    private Integer AgeAccess;
 }

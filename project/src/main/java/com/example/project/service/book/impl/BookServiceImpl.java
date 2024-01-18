@@ -34,15 +34,16 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void register(BookRequest bookRequest) {
-        if(bookRequest.getName().contains("@")){
-            throw new NotFoundException("You are fucking idiot " , HttpStatus.BAD_GATEWAY);
+        if(bookRequest.getName().isEmpty()){
+            throw new NotFoundException("Book name can't be empty" , HttpStatus.BAD_REQUEST);
         }
 
         Book book= new Book();
         book.setName(bookRequest.getName());
         book.setPrice(bookRequest.getPrice());
+        book.setGenre(bookRequest.getGenre());
         book.setTranscript(bookRequest.getTranscript());
-        book.setAge_access(bookRequest.getAge_access());
+        book.setAgeAccess(bookRequest.getAgeAccess());
         book.setAuthor_name(bookRequest.getAuthor_name());
         book.setCreated_date(bookRequest.getCreated_date());
         book.setDescription(bookRequest.getDescription());
@@ -72,12 +73,24 @@ public class BookServiceImpl implements BookService {
             book.get().setDescription(bookRequest.getDescription());
             book.get().setPrice(bookRequest.getPrice());
             bookRepository.save(book.get());
+
         }
     }
 
     @Override
-    public List<BookResponse> getAll() {
-        return  mapper.toDtoS(bookRepository.findAll());
+    public List<BookResponse> getAll(String s)
+    {
+        User user = authService.getUsernameFromToken(s);
+        if (!user.getRole().equals(Role.ADMIN)){
+            System.out.println("the user");
+            List<BookResponse> bookResponses = mapper.toDtoS(bookRepository.findAllByExistAndAgeAccessLessThan(
+                    true, user.getCustomer().getAge()));
+            System.out.println("the size: "+bookResponses.size());
+            return bookResponses;
+        }
+        System.out.println("the admin");
+
+        return mapper.toDtoS(bookRepository.findAll());
     }
     public BookResponse getById(Long id) {
         Optional<Book> book= bookRepository.findById(id);
@@ -102,13 +115,44 @@ public class BookServiceImpl implements BookService {
 
         book.setName(request.getName());
         book.setPrice(request.getPrice());
-        book.setAge_access(request.getAge_access());
+        book.setAgeAccess(request.getAgeAccess());
+        book.setDescription(request.getDescription());
         book.setAuthor_name(request.getAuthor_name());
+        book.setGenre(request.getGenre());
         book.setTranscript(request.getTranscript());
         book.setCreated_date(request.getCreated_date());
         book.setExist(true);
         bookRepository.save(book);
     }
+
+    @Override
+    public void buy(Long bookId, String token) {
+        User user = authService.getUsernameFromToken(token);
+        Optional<Book>book  = bookRepository.findById(bookId);
+        if(book.isEmpty())
+            throw new NotFoundException("this book has already been sold", HttpStatus.BAD_REQUEST);
+        book.get().setExist(false);
+        List<Book>books = new ArrayList<>();
+        if (!user.getCustomer().getBooks().isEmpty())
+            books = user.getCustomer().getBooks();
+        books.add(book.get());
+        user.getCustomer().setBooks(books);
+        userRepository.save(user);
+    }
+
+    @Override
+    public List<BookResponse> getMyBooks(String string) {
+        User user = authService.getUsernameFromToken(string);
+
+        if (!user.getRole().equals(Role.ADMIN)){
+            System.out.println("the user");
+            List<BookResponse> bookResponses = mapper.toDtoS(user.getCustomer().getBooks());
+            System.out.println("the size: "+bookResponses.size());
+            return bookResponses;
+        }
+        return null;
+    }
+
     private boolean containsType(String type) {
         for (Role role1 : Role.values()){
             if (role1.name().equalsIgnoreCase(type))

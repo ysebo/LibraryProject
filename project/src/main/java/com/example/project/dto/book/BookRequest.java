@@ -10,8 +10,9 @@ public class BookRequest {
     private String description;
     private Integer price;
     private String transcript;
-    private Integer age_access;
+    private Integer AgeAccess;
     private String name;
+    private String genre;
     private String author_name;
     private Integer created_date;
     private Role role;

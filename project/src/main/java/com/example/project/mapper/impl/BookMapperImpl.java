@@ -14,11 +14,14 @@ public class BookMapperImpl implements BookMapper {
     @Override
     public BookResponse toDto(Book object) {
         BookResponse bookResponse = new BookResponse();
-
+        bookResponse.setId(object.getId());
         bookResponse.setName(object.getName());
-        bookResponse.setDescription(object.getDescription());
+        bookResponse.setAuthor_name(object.getAuthor_name());
         bookResponse.setPrice(object.getPrice());
+        bookResponse.setDescription(object.getDescription());
         bookResponse.setCreated_date(object.getCreated_date());
+        bookResponse.setGenre(object.getGenre());
+        bookResponse.setAgeAccess(object.getAgeAccess());
         return bookResponse;
     }
 

@@ -14,8 +14,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "users_TABLE ")
-public class User implements UserDetails {
+@Table(name = "users_TABLE")
+public class
+User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +28,10 @@ public class User implements UserDetails {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Customer customer;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Guest guest ;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    private Guest guest;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

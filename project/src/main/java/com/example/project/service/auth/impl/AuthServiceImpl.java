@@ -5,6 +5,7 @@ import com.example.project.dto.auth.AuthLoginRequest;
 import com.example.project.dto.auth.AuthLoginResponse;
 import com.example.project.dto.user.UserRequest;
 import com.example.project.entites.Customer;
+import com.example.project.entites.Guest;
 import com.example.project.entites.User;
 import com.example.project.enums.Role;
 import com.example.project.exception.BadCredentialsException;
@@ -21,7 +22,6 @@ import net.minidev.json.parser.ParseException;
 import org.springframework.stereotype.Service;
 
 
-import java.beans.ConstructorProperties;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,9 +50,20 @@ public class AuthServiceImpl implements AuthService {
                     userRequest.getName()
             );
             user.setCustomer(customer);
+            userRepository.save(user);
         }
-//        else if(userRequest.getRole().equals(Role))
-        userRepository.save(user);
+
+        else if(userRequest.getRole().equals(Role.GUEST)){
+            Guest guest = new Guest();
+            guest.setInterests(userRequest.getInterests());
+            guest.setName(userRequest.getName());
+            user.setGuest(guest);
+            userRepository.save(user);
+        }
+        else {
+            userRepository.save(user);
+        }
+
     }
 
     @Override
@@ -65,7 +76,7 @@ public class AuthServiceImpl implements AuthService {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authLoginRequest.getEmail(),authLoginRequest.getPassword()));
 
         }catch (org.springframework.security.authentication.BadCredentialsException e){
-            throw new BadCredentialsException("user not fff");
+            throw new BadCredentialsException("Never let problems to break you , dude. You have just forgotten your password that's all ))");
         }
 
 

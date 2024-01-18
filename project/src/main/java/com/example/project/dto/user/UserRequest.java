@@ -13,4 +13,5 @@ public class UserRequest {
     private String password;
     private Integer age;
     private Role role;
+    private String interests;
 }
