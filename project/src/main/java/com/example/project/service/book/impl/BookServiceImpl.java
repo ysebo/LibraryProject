@@ -53,6 +53,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteById(Long id) {
         Optional<Book > book= bookRepository.findById(id);
+
         if(book.isEmpty()) {
             throw new NotFoundException("There is no book" , HttpStatus.BAD_GATEWAY);
         }
@@ -129,7 +130,9 @@ public class BookServiceImpl implements BookService {
     public void buy(Long bookId, String token) {
         User user = authService.getUsernameFromToken(token);
         Optional<Book>book  = bookRepository.findById(bookId);
-        if(book.isEmpty())
+        if(user.getRole().equals(Role.GUEST))
+            throw new NotFoundException("GUEST can't buy books " , HttpStatus.BAD_GATEWAY);
+        if(book.isEmpty()  )
             throw new NotFoundException("this book has already been sold", HttpStatus.BAD_REQUEST);
         book.get().setExist(false);
         List<Book>books = new ArrayList<>();

@@ -5,7 +5,6 @@ import com.example.project.dto.auth.AuthLoginRequest;
 import com.example.project.dto.auth.AuthLoginResponse;
 import com.example.project.dto.user.UserRequest;
 import com.example.project.entites.Customer;
-import com.example.project.entites.Guest;
 import com.example.project.entites.User;
 import com.example.project.enums.Role;
 import com.example.project.exception.BadCredentialsException;
@@ -53,13 +52,6 @@ public class AuthServiceImpl implements AuthService {
             userRepository.save(user);
         }
 
-        else if(userRequest.getRole().equals(Role.GUEST)){
-            Guest guest = new Guest();
-            guest.setInterests(userRequest.getInterests());
-            guest.setName(userRequest.getName());
-            user.setGuest(guest);
-            userRepository.save(user);
-        }
         else {
             userRepository.save(user);
         }

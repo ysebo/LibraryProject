@@ -50,7 +50,7 @@ public class BookController {
         Optional<User> user = userRepository.findById(userId);
         return bookMapper.toDtoS(user.get().getCustomer().getBooks());
     }
-    @PostMapping("/buy{bookId}")
+    @PostMapping("/buy/{bookId}")
     public void buy(@PathVariable Long bookId , @RequestHeader("Authorization")String token){
         bookService.buy(bookId , token );
     }
