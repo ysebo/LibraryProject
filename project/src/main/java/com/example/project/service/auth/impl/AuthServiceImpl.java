@@ -45,6 +45,7 @@ public class AuthServiceImpl implements AuthService {
             Customer customer = new Customer();
             customer.setAge(userRequest.getAge());
             customer.setUser(user);
+            customer.setBalance(5000);
             customer.setName(
                     userRequest.getName()
             );

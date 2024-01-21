@@ -32,6 +32,7 @@ public class BookServiceImpl implements BookService {
     private final AuthService authService;
 
 
+
     @Override
     public void register(BookRequest bookRequest) {
         if(bookRequest.getName().isEmpty()){
@@ -135,6 +136,7 @@ public class BookServiceImpl implements BookService {
         if(book.isEmpty()  )
             throw new NotFoundException("this book has already been sold", HttpStatus.BAD_REQUEST);
         book.get().setExist(false);
+        user.getCustomer().setBalance(user.getCustomer().getBalance()-book.get().getPrice());
         List<Book>books = new ArrayList<>();
         if (!user.getCustomer().getBooks().isEmpty())
             books = user.getCustomer().getBooks();
